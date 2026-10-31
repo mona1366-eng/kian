@@ -16,7 +16,6 @@
             --text-muted: #94a3b8;
             --accent: #8b5cf6;
             --danger: #ef4444;
-            --success: #22c55e;
         }
 
         * {
@@ -90,6 +89,21 @@
 
         .content {
             padding: 30px 25px;
+        }
+
+        /* ساختار نمایش مراحل: پیش‌فرض همه پنهان به جز مرحله فعال */
+        .step {
+            display: none;
+        }
+
+        .step.active-step {
+            display: block !important;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .step-title {
@@ -175,20 +189,6 @@
             display: none;
         }
 
-        .step {
-            display: none;
-        }
-
-        .step.active {
-            display: block;
-            animation: fadeIn 0.5s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
         .success-card {
             text-align: center;
         }
@@ -237,7 +237,7 @@
         <div class="header">
             <h3>School Council • Special Challenge</h3>
             <h1>MISSION K</h1>
-            <p>چهار مرحله، چند چالش و یک مأموریت متفاوت!<br>بین می‌تونی تا آخرش پیش بری؟</p>
+            <p>چهار مرحله، چند چالش و یک مأموریت متفاوت!<br>ببین می‌تونی تا آخرش پیش بری؟</p>
         </div>
         
         <div class="progress-bar-container">
@@ -245,11 +245,11 @@
         </div>
 
         <div class="content">
-            <!-- مرحله ۱ -->
-            <div class="step active" id="step1">
+            <!-- مرحله ۱ (پیش‌فرض باز و فعال) -->
+            <div class="step active-step" id="step1">
                 <div class="step-title">🔒 MISSION 01 • رمزگشایی</div>
                 <div class="question-box">
-                    هر عدد نشان‌دهنده جایگاه یک حرف در الفبای انگلیسی است. این رمز چه کلمه‌ای می‌سازد؟<br>
+                    هر عدد نشان‌دهنده جایگاه یک حرف در الفبای انگلیسی است. این رمز چه کلمه‌ای می‌سازد؟<br><br>
                     <strong>11 - 9 - 1 - 14</strong>
                 </div>
                 <input type="text" class="text-input" id="input1" placeholder="جواب را اینجا بنویس؛ مثلاً Kian">
@@ -284,7 +284,6 @@
             <!-- مرحله ۴ (پایانی) -->
             <div class="step" id="step4">
                 <div class="success-card">
-                    <!-- کادر دایره‌ای عکس کیان -->
                     <img src="kian.jpg" alt="کیان بلوری" class="kian-avatar" onerror="this.style.display='flex'; this.src=''; this.innerHTML='تصویر کیان';">
                     
                     <h2 style="color: var(--primary); margin-bottom: 10px;">🏆 مأموریت با موفقیت انجام شد!</h2>
@@ -324,12 +323,16 @@
             setTimeout(() => el.classList.remove('shake'), 400);
         }
 
+        function switchStep(fromId, toId) {
+            document.getElementById(fromId).classList.remove('active-step');
+            document.getElementById(toId).classList.add('active-step');
+        }
+
         function checkStep1() {
             const val = document.getElementById('input1').value.trim().toLowerCase();
             if (val === 'kian' || val === 'کیان') {
                 document.getElementById('error1').style.display = 'none';
-                document.getElementById('step1').classList.remove('active');
-                document.getElementById('step2').classList.add('active');
+                switchStep('step1', 'step2');
                 updateProgress(50);
             } else {
                 triggerError('step1', 'error1');
@@ -339,8 +342,7 @@
         function checkStep2(isCorrect) {
             if (isCorrect) {
                 document.getElementById('error2').style.display = 'none';
-                document.getElementById('step2').classList.remove('active');
-                document.getElementById('step3').classList.add('active');
+                switchStep('step2', 'step3');
                 updateProgress(75);
             } else {
                 triggerError('step2', 'error2');
@@ -351,11 +353,9 @@
             const val = document.getElementById('input3').value.trim();
             if (val.includes('بلوری') || val.toLowerCase().includes('bolouri') || val.toLowerCase().includes('blouri')) {
                 document.getElementById('error3').style.display = 'none';
-                document.getElementById('step3').classList.remove('active');
-                document.getElementById('step4').classList.add('active');
+                switchStep('step3', 'step4');
                 updateProgress(100);
                 
-                // افکت شادی و نورافشانی
                 confetti({
                     particleCount: 120,
                     spread: 80,
