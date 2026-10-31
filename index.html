@@ -3,377 +3,149 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مأموریت کیان | چالش شورای دانش‌آموزی</title>
-    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;700;900&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <title>گمشده‌ی شورا | مأموریت ویژه</title>
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Canvas Confetti Library -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <!-- Font Vazirmatn -->
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Vazirmatn', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            dark: '#0d0f1d',
+                            card: '#16192e',
+                            border: '#2a2f52',
+                            accent: '#ffd166',
+                            purple: '#7209b7',
+                            pink: '#f72585',
+                            blue: '#4cc9f0',
+                            glow: '#3a0ca3'
+                        }
+                    },
+                    boxShadow: {
+                        'neon-yellow': '0 0 15px rgba(255, 209, 102, 0.4), 0 0 30px rgba(255, 209, 102, 0.1)',
+                        'neon-purple': '0 0 20px rgba(114, 9, 183, 0.5), 0 0 40px rgba(114, 9, 183, 0.2)',
+                        'card-glow': '0 8px 32px 0 rgba(0, 0, 0, 0.37)'
+                    }
+                }
+            }
+        }
+    </script>
+    
     <style>
-        :root {
-            --bg-color: #0f172a;
-            --card-bg: #1e293b;
-            --primary: #fbbf24;
-            --primary-hover: #f59e0b;
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --accent: #8b5cf6;
-            --danger: #ef4444;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Vazirmatn', sans-serif;
-        }
-
         body {
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
+            background-color: #0b0d19;
+            background-image: 
+                radial-gradient(circle at 15% 15%, rgba(114, 9, 183, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 85% 85%, rgba(76, 201, 240, 0.12) 0%, transparent 40%),
+                radial-gradient(circle at 50% 50%, rgba(247, 37, 133, 0.08) 0%, transparent 60%);
+            background-attachment: fixed;
+            font-family: 'Vazirmatn', sans-serif;
+            color: #f1f5f9;
         }
 
-        .container {
-            width: 100%;
-            max-width: 600px;
-            background: var(--card-bg);
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+        .glass-card {
+            background: rgba(22, 25, 46, 0.75);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
         }
 
-        .header {
-            background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%);
-            padding: 25px 20px;
-            text-align: center;
-            border-bottom: 2px solid var(--primary);
+        .glow-text-yellow {
+            text-shadow: 0 0 12px rgba(255, 209, 102, 0.6);
         }
 
-        .header h3 {
-            color: var(--primary);
-            font-size: 0.85rem;
-            letter-spacing: 2px;
-            margin-bottom: 8px;
-            text-transform: uppercase;
+        .glow-text-purple {
+            text-shadow: 0 0 16px rgba(114, 9, 183, 0.8);
         }
 
-        .header h1 {
-            font-size: 1.8rem;
-            font-weight: 900;
-            margin-bottom: 10px;
-            color: #fff;
+        @keyframes pulseGlow {
+            0%, 100% { opacity: 0.6; transform: scale(1); }
+            50% { opacity: 0.9; transform: scale(1.02); }
         }
 
-        .header p {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-            line-height: 1.6;
-        }
-
-        .progress-bar-container {
-            background: #0f172a;
-            height: 8px;
-            width: 100%;
-        }
-
-        .progress-bar {
-            background: var(--primary);
-            height: 100%;
-            width: 25%;
-            transition: width 0.4s ease;
-        }
-
-        .content {
-            padding: 30px 25px;
-        }
-
-        .step {
-            display: none;
-        }
-
-        .step.active-step {
-            display: block !important;
-            animation: fadeIn 0.5s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .step-title {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 1.1rem;
-            color: var(--primary);
-            margin-bottom: 15px;
-            font-weight: 700;
-        }
-
-        .question-box {
-            font-size: 1.1rem;
-            line-height: 1.8;
-            margin-bottom: 25px;
-        }
-
-        .options-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            margin-bottom: 20px;
-        }
-
-        .option-btn {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: var(--text-main);
-            padding: 15px 20px;
-            border-radius: 12px;
-            cursor: pointer;
-            font-size: 1rem;
-            text-align: right;
-            transition: all 0.3s ease;
-        }
-
-        .option-btn:hover {
-            background: rgba(251, 191, 36, 0.1);
-            border-color: var(--primary);
-            transform: translateY(-2px);
-        }
-
-        .text-input {
-            width: 100%;
-            background: rgba(0, 0, 0, 0.2);
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            padding: 15px;
-            border-radius: 12px;
-            color: #fff;
-            font-size: 1rem;
-            margin-bottom: 20px;
-            outline: none;
-            transition: border-color 0.3s;
-        }
-
-        .text-input:focus {
-            border-color: var(--primary);
-        }
-
-        .action-btn {
-            background: var(--primary);
-            color: #0f172a;
-            border: none;
-            width: 100%;
-            padding: 15px;
-            border-radius: 12px;
-            font-size: 1.1rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: background 0.3s, transform 0.2s;
-        }
-
-        .action-btn:hover {
-            background: var(--primary-hover);
-        }
-
-        .error-msg {
-            color: var(--danger);
-            font-size: 0.9rem;
-            margin-top: -10px;
-            margin-bottom: 15px;
-            display: none;
-        }
-
-        .success-card {
-            text-align: center;
-        }
-
-        .kian-avatar {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 4px solid var(--primary);
-            margin: 0 auto 20px auto;
-            box-shadow: 0 0 20px rgba(251, 191, 36, 0.4);
-            background: #334155;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--text-muted);
-            font-size: 0.8rem;
-        }
-
-        .share-box {
-            background: rgba(139, 92, 246, 0.1);
-            border: 1px dashed var(--accent);
-            padding: 15px;
-            border-radius: 12px;
-            margin-top: 20px;
-            font-size: 0.9rem;
-            color: #c4b5fd;
-            word-break: break-all;
+        .pulse-glow {
+            animation: pulseGlow 3s infinite ease-in-out;
         }
 
         .shake {
-            animation: shake 0.4s ease-in-out;
+            animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
         }
 
         @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            20%, 60% { transform: translateX(-8px); }
-            40%, 80% { transform: translateX(8px); }
+            10%, 90% { transform: translate3d(-1px, 0, 0); }
+            20%, 80% { transform: translate3d(2px, 0, 0); }
+            30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+            40%, 60% { transform: translate3d(4px, 0, 0); }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.4s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
-<body>
+<body class="min-h-screen flex flex-col justify-between items-center p-4 sm:p-6 overflow-x-hidden">
 
-    <div class="container">
-        <div class="header">
-            <h3>مدرسه شهید بهشتی • شورای دانش‌آموزی</h3>
-            <h1>پروتکل گمشده‌ی شورا</h1>
-            <p>یک چالش معمایی و جذاب برای پیدا کردن کاندیدای اصلح!<br>ببینیم می‌تونی تمام مراحل رو طی کنی؟</p>
-        </div>
+    <!-- Header / Brand -->
+    <header class="w-full max-w-xl text-center my-4">
+        <p class="text-xs sm:text-sm font-bold tracking-widest text-brand-blue uppercase mb-1">
+            SCHOOL COUNCIL • SPECIAL CHALLENGE
+        </p>
+        <h1 class="text-3xl sm:text-4xl font-extrabold text-brand-accent glow-text-yellow tracking-tight">
+            گمشده‌ی شورا
+        </h1>
+    </header>
+
+    <!-- Main Container -->
+    <main class="w-full max-w-xl my-auto">
         
-        <div class="progress-bar-container">
-            <div class="progress-bar" id="progressBar" style="width: 25%;"></div>
-        </div>
-
-        <div class="content">
-            <!-- مرحله ۱ (آغاز چالش) -->
-            <div class="step active-step" id="step1">
-                <div class="step-title">🔒 مرحله اول • رمزگشایی اسم</div>
-                <div class="question-box">
-                    برای شروع مأموریت، باید رمز اول را باز کنی. هر عدد نشان‌دهنده جایگاه یک حرف در الفبای انگلیسی است:<br><br>
-                    <strong>11 - 9 - 1 - 14</strong><br><br>
-                    این اعداد چه کلمه‌ای (نام کوچک کاندیدا) را می‌سازند؟
-                </div>
-                <input type="text" class="text-input" id="input1" placeholder="پاسخ را به انگلیسی بنویس...">
-                <div class="error-msg" id="error1">رمز وارد شده اشتباه است! دوباره تلاش کن.</div>
-                <button class="action-btn" onclick="checkStep1()">تایید و ورود به مرحله بعد</button>
+        <!-- Progress Bar Container -->
+        <div id="progress-container" class="w-full mb-6 hidden">
+            <div class="flex justify-between items-center text-xs font-semibold text-slate-400 mb-2">
+                <span id="step-label">مرحله ۱ از ۳</span>
+                <span id="progress-percent">33%</span>
             </div>
-
-            <!-- مرحله ۲ -->
-            <div class="step" id="step2">
-                <div class="step-title">⚡ مرحله دوم • ویژگی‌های کاندیدا</div>
-                <div class="question-box">
-                    کاندیدای اصلح برای شورای دانش‌آموزی چه ویژگی باید داشته باشد که واقعاً به درد بچه‌ها بخورد؟
-                </div>
-                <div class="options-grid">
-                    <button class="option-btn" onclick="checkStep2(false)">الف) فقط به فکر حرف زدن باشد و کاری نکند.</button>
-                    <button class="option-btn" onclick="checkStep2(true)">ب) پرانرژی، پیگیر مطالبات بچه‌ها و پایه‌ریز زنگ تفریح‌های شادتر.</button>
-                </div>
-                <div class="error-msg" id="error2">انتخاب نادرست بود! راهنمایی: گزینه دوم.</div>
-            </div>
-
-            <!-- مرحله ۳ -->
-            <div class="step" id="step3">
-                <div class="step-title">💎 مرحله سوم • راز نام خانوادگی</div>
-                <div class="question-box">
-                    نام خانوادگی این کاندیدا تداعی‌کننده شفافیت، درخشندگی و زلالی است و مثل یک کریستالِ زیبا می‌درخشد. نام خانوادگی او چیست؟
-                </div>
-                <input type="text" class="text-input" id="input3" placeholder="نام خانوادگی را وارد کنید...">
-                <div class="error-msg" id="error3">پاسخ نادرست است! دقت بیشتری کنید.</div>
-                <button class="action-btn" onclick="checkStep3()">رمزگشایی نهایی و پایان مأموریت</button>
-            </div>
-
-            <!-- مرحله ۴ (پایانی) -->
-            <div class="step" id="step4">
-                <div class="success-card">
-                    <img src="kian.jpg" alt="کیان بلوری" class="kian-avatar" onerror="this.style.display='flex'; this.src=''; this.innerHTML='تصویر کیان';">
-                    
-                    <h2 style="color: var(--primary); margin-bottom: 10px;">🏆 تبریک! مأموریت با موفقیت انجام شد</h2>
-                    <p style="color: var(--text-muted); margin-bottom: 20px; line-height: 1.8;">
-                        شما با موفقیت رمزها را شکستید و «گمشده‌ی شورا» را کشف کردید:
-                    </p>
-                    
-                    <div style="background: rgba(251, 191, 36, 0.1); border: 2px solid var(--primary); padding: 15px; border-radius: 15px; margin-bottom: 20px;">
-                        <h3 style="color: #fff; font-size: 1.3rem; margin-bottom: 5px;">✨ کیان بلوری</h3>
-                        <p style="color: var(--primary); font-size: 0.95rem;">کاندیدای شورای دانش‌آموزی (پایه هفتم - دبیرستان شهید بهشتی)</p>
-                    </div>
-
-                    <p style="font-size: 0.95rem; margin-bottom: 20px; color: #cbd5e1;">
-                        همراه شما برای ساختن بهترین خاطرات و پیگیری خواسته‌های بچه‌ها!<br><strong>رأی ما به: کیان بلوری 🗳️</strong>
-                    </p>
-
-                    <button class="action-btn" onclick="copyShareText()">📋 کپی متن دعوت برای گروه شاد</button>
-                    
-                    <div class="share-box" id="shareBox" style="display:none;">
-                        متن و لینک با موفقیت کپی شد! حالا می‌توانید آن را در شاد پیست کنید.
-                    </div>
-                </div>
+            <div class="w-full bg-slate-800/80 rounded-full h-2.5 p-0.5 border border-slate-700">
+                <div id="progress-bar" class="bg-gradient-to-r from-brand-purple via-brand-pink to-brand-accent h-1.5 rounded-full transition-all duration-500 ease-out w-1/3"></div>
             </div>
         </div>
-    </div>
 
-    <script>
-        function updateProgress(percent) {
-            document.getElementById('progressBar').style.width = percent + '%';
-        }
-
-        function triggerError(stepId, errorId) {
-            const el = document.getElementById(stepId);
-            const err = document.getElementById(errorId);
-            el.classList.add('shake');
-            err.style.display = 'block';
-            setTimeout(() => el.classList.remove('shake'), 400);
-        }
-
-        function switchStep(fromId, toId) {
-            document.getElementById(fromId).classList.remove('active-step');
-            document.getElementById(toId).classList.add('active-step');
-        }
-
-        function checkStep1() {
-            const val = document.getElementById('input1').value.trim().toLowerCase();
-            if (val === 'kian' || val === 'کیان') {
-                document.getElementById('error1').style.display = 'none';
-                switchStep('step1', 'step2');
-                updateProgress(50);
-            } else {
-                triggerError('step1', 'error1');
-            }
-        }
-
-        function checkStep2(isCorrect) {
-            if (isCorrect) {
-                document.getElementById('error2').style.display = 'none';
-                switchStep('step2', 'step3');
-                updateProgress(75);
-            } else {
-                triggerError('step2', 'error2');
-            }
-        }
-
-        function checkStep3() {
-            const val = document.getElementById('input3').value.trim();
-            if (val.includes('بلوری') || val.toLowerCase().includes('bolouri') || val.toLowerCase().includes('blouri')) {
-                document.getElementById('error3').style.display = 'none';
-                switchStep('step3', 'step4');
-                updateProgress(100);
-                
-                confetti({
-                    particleCount: 120,
-                    spread: 80,
-                    origin: { y: 0.6 }
-                });
-            } else {
-                triggerError('step3', 'error3');
-            }
-        }
-
-        function copyShareText() {
-            const shareText = `🚨 فوری و محرمانه؛ آغاز پروتکلِ «گمشده‌ی شورا»! 🕵️‍♂️\n\nقابل توجه بچه‌های گل دبیرستان شهید بهشتی (پایه‌های هفتم، هشتم و نهم)!\nشورا بدون کیان مثل مدرسه بدون زنگ تفریح است! 😄\n\n🗝️ برای ورود به اتاق فرارِ آنلاین و رمزگشایی هویت کاندیدا، روی لینک زیر کلیک کنید:\n🔗 ` + window.location.href + `\n\n⏱️ زمان محدود است! ببینم اولین نفری که مأموریت را تمام می‌کند چه کسی است...`;
+        <!-- STEP 0: START PAGE -->
+        <div id="step-0" class="glass-card rounded-2xl p-6 sm:p-8 shadow-card-glow text-center border border-brand-border/60 fade-in relative overflow-hidden">
+            <div class="absolute -top-12 -right-12 w-32 h-32 bg-brand-purple/20 rounded-full blur-2xl pointer-events-none"></div>
             
-            navigator.clipboard.writeText(shareText).then(() => {
-                const box = document.getElementById('shareBox');
-                box.style.display = 'block';
-            });
-        }
-    </script>
-</body>
-</html>
+            <div class="inline-flex items-center justify-center p-3 bg-brand-purple/20 border border-brand-purple/40 rounded-2xl mb-4 text-brand-accent">
+                <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                </svg>
+            </div>
+
+            <h2 class="text-xl sm:text-2xl font-bold text-white mb-3">
+                چهار مرحله، چند چالش و یک مأموریت متفاوت!
+            </h2>
+            
+            <p class="text-sm sm:text-base text-slate-300 leading-relaxed mb-6">
+                سلام به دانش‌آموزان پایه‌های <span class="text-brand-accent font-semibold">هفتم، هشتم و نهم</span>! آیا می‌توانی با هوش خود هویت کاندیدای اصلی شورا را رمزگشایی کنی؟
+            </p>
+
+            <div class="flex flex-wrap justify-center gap-2 mb-8">
+                <span class="px-3 py-1 text-xs rounded-full bg-slate-800/90 text-slate-300 border border-slate-700">🧩 معما</span>
+                <span class="px-3 py-1 text-xs rounded-full bg-slate-800/90 text-slate-300 border border-slate-700">💡 هوش</span>
+                <span class="px-3 py-1 text-xs rounded-full bg-slate-800/90 text-slate-300 border border-slate-700">🎯 انتخاب</span>
+                <span class="px-3 py-1 text-xs rounded-full bg-slate-800/90 text-slate-300 border border-slate-700">🎁 غافلگیری</span>
+            </div>
+
+            <button onclick
