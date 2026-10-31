@@ -91,7 +91,6 @@
             padding: 30px 25px;
         }
 
-        /* ساختار نمایش مراحل: پیش‌فرض همه پنهان به جز مرحله فعال */
         .step {
             display: none;
         }
@@ -235,9 +234,9 @@
 
     <div class="container">
         <div class="header">
-            <h3>School Council • Special Challenge</h3>
-            <h1>MISSION K</h1>
-            <p>چهار مرحله، چند چالش و یک مأموریت متفاوت!<br>ببین می‌تونی تا آخرش پیش بری؟</p>
+            <h3>مدرسه شهید بهشتی • شورای دانش‌آموزی</h3>
+            <h1>پروتکل گمشده‌ی شورا</h1>
+            <p>یک چالش معمایی و جذاب برای پیدا کردن کاندیدای اصلح!<br>ببینیم می‌تونی تمام مراحل رو طی کنی؟</p>
         </div>
         
         <div class="progress-bar-container">
@@ -245,40 +244,41 @@
         </div>
 
         <div class="content">
-            <!-- مرحله ۱ (پیش‌فرض باز و فعال) -->
+            <!-- مرحله ۱ (آغاز چالش) -->
             <div class="step active-step" id="step1">
-                <div class="step-title">🔒 MISSION 01 • رمزگشایی</div>
+                <div class="step-title">🔒 مرحله اول • رمزگشایی اسم</div>
                 <div class="question-box">
-                    هر عدد نشان‌دهنده جایگاه یک حرف در الفبای انگلیسی است. این رمز چه کلمه‌ای می‌سازد؟<br><br>
-                    <strong>11 - 9 - 1 - 14</strong>
+                    برای شروع مأموریت، باید رمز اول را باز کنی. هر عدد نشان‌دهنده جایگاه یک حرف در الفبای انگلیسی است:<br><br>
+                    <strong>11 - 9 - 1 - 14</strong><br><br>
+                    این اعداد چه کلمه‌ای (نام کوچک کاندیدا) را می‌سازند؟
                 </div>
-                <input type="text" class="text-input" id="input1" placeholder="جواب را اینجا بنویس؛ مثلاً Kian">
+                <input type="text" class="text-input" id="input1" placeholder="پاسخ را به انگلیسی بنویس...">
                 <div class="error-msg" id="error1">رمز وارد شده اشتباه است! دوباره تلاش کن.</div>
-                <button class="action-btn" onclick="checkStep1()">بررسی رمز و ورود به مرحله بعد</button>
+                <button class="action-btn" onclick="checkStep1()">تایید و ورود به مرحله بعد</button>
             </div>
 
             <!-- مرحله ۲ -->
             <div class="step" id="step2">
-                <div class="step-title">⚡ MISSION 02 • ویژگی‌های کلیدی</div>
+                <div class="step-title">⚡ مرحله دوم • ویژگی‌های کاندیدا</div>
                 <div class="question-box">
-                    کسی که برای زنگ تفریح‌های بهتر و پیگیری مشکلات بچه‌ها آمده، چه ویژگی بارزی دارد؟
+                    کاندیدای اصلح برای شورای دانش‌آموزی چه ویژگی باید داشته باشد که واقعاً به درد بچه‌ها بخورد؟
                 </div>
                 <div class="options-grid">
-                    <button class="option-btn" onclick="checkStep2(false)">الف) همیشه به فکر نمره است و کاری به بقیه ندارد.</button>
-                    <button class="option-btn" onclick="checkStep2(true)">ب) نماینده‌ای واقعی، پرانرژی و پیگیرِ صدای دانش‌آموزان است.</button>
+                    <button class="option-btn" onclick="checkStep2(false)">الف) فقط به فکر حرف زدن باشد و کاری نکند.</button>
+                    <button class="option-btn" onclick="checkStep2(true)">ب) پرانرژی، پیگیر مطالبات بچه‌ها و پایه‌ریز زنگ تفریح‌های شادتر.</button>
                 </div>
-                <div class="error-msg" id="error2">گزینه انتخابی اشتباه است! راهنمایی: گزینه دوم.</div>
+                <div class="error-msg" id="error2">انتخاب نادرست بود! راهنمایی: گزینه دوم.</div>
             </div>
 
             <!-- مرحله ۳ -->
             <div class="step" id="step3">
-                <div class="step-title">💎 MISSION 03 • راز سنگ درخشان</div>
+                <div class="step-title">💎 مرحله سوم • راز نام خانوادگی</div>
                 <div class="question-box">
-                    نام خانوادگی این کاندیدا تداعی‌کننده شفافیت، درخشندگی و زلالی یک کریستال است که ما را به یاد کریستال‌های درخشان و شفاف طبیعت می‌اندازد. فامیلی او چیست؟
+                    نام خانوادگی این کاندیدا تداعی‌کننده شفافیت، درخشندگی و زلالی است و مثل یک کریستالِ زیبا می‌درخشد. نام خانوادگی او چیست؟
                 </div>
                 <input type="text" class="text-input" id="input3" placeholder="نام خانوادگی را وارد کنید...">
                 <div class="error-msg" id="error3">پاسخ نادرست است! دقت بیشتری کنید.</div>
-                <button class="action-btn" onclick="checkStep3()">رمزگشایی نهایی</button>
+                <button class="action-btn" onclick="checkStep3()">رمزگشایی نهایی و پایان مأموریت</button>
             </div>
 
             <!-- مرحله ۴ (پایانی) -->
@@ -286,18 +286,18 @@
                 <div class="success-card">
                     <img src="kian.jpg" alt="کیان بلوری" class="kian-avatar" onerror="this.style.display='flex'; this.src=''; this.innerHTML='تصویر کیان';">
                     
-                    <h2 style="color: var(--primary); margin-bottom: 10px;">🏆 مأموریت با موفقیت انجام شد!</h2>
+                    <h2 style="color: var(--primary); margin-bottom: 10px;">🏆 تبریک! مأموریت با موفقیت انجام شد</h2>
                     <p style="color: var(--text-muted); margin-bottom: 20px; line-height: 1.8;">
-                        شما با موفقیت رمزها را شکستید و «گمشده‌ی شورا» را پیدا کردید:
+                        شما با موفقیت رمزها را شکستید و «گمشده‌ی شورا» را کشف کردید:
                     </p>
                     
                     <div style="background: rgba(251, 191, 36, 0.1); border: 2px solid var(--primary); padding: 15px; border-radius: 15px; margin-bottom: 20px;">
                         <h3 style="color: #fff; font-size: 1.3rem; margin-bottom: 5px;">✨ کیان بلوری</h3>
-                        <p style="color: var(--primary); font-size: 0.95rem;">کاندیدای شورای دانش‌آموزی (شهید بهشتی)</p>
+                        <p style="color: var(--primary); font-size: 0.95rem;">کاندیدای شورای دانش‌آموزی (پایه هفتم - دبیرستان شهید بهشتی)</p>
                     </div>
 
                     <p style="font-size: 0.95rem; margin-bottom: 20px; color: #cbd5e1;">
-                        نماینده‌ای واقعی، پرانرژی و پیگیر صدای شما در همه‌ی پایه‌ها!<br><strong>رأی ما به: کیان بلوری 🗳️</strong>
+                        همراه شما برای ساختن بهترین خاطرات و پیگیری خواسته‌های بچه‌ها!<br><strong>رأی ما به: کیان بلوری 🗳️</strong>
                     </p>
 
                     <button class="action-btn" onclick="copyShareText()">📋 کپی متن دعوت برای گروه شاد</button>
@@ -367,7 +367,7 @@
         }
 
         function copyShareText() {
-            const shareText = `🚨 فوری و محرمانه؛ آغاز پروتکلِ «گمشده‌ی شورا»! 🕵️‍♂️\n\nقابل توجه بچه‌های گل پایه‌های هفتم، هشتم و نهم!\nشورا بدون کیان مثل مدرسه بدون زنگ تفریح است! 😄\n\n🗝️ برای ورود به اتاق فرارِ آنلاین و رمزگشایی هویت کاندیدا، روی لینک زیر کلیک کنید:\n🔗 ` + window.location.href + `\n\n⏱️ زمان محدود است! ببینم اولین نفری که مأموریت را تمام می‌کند چه کسی است...`;
+            const shareText = `🚨 فوری و محرمانه؛ آغاز پروتکلِ «گمشده‌ی شورا»! 🕵️‍♂️\n\nقابل توجه بچه‌های گل دبیرستان شهید بهشتی (پایه‌های هفتم، هشتم و نهم)!\nشورا بدون کیان مثل مدرسه بدون زنگ تفریح است! 😄\n\n🗝️ برای ورود به اتاق فرارِ آنلاین و رمزگشایی هویت کاندیدا، روی لینک زیر کلیک کنید:\n🔗 ` + window.location.href + `\n\n⏱️ زمان محدود است! ببینم اولین نفری که مأموریت را تمام می‌کند چه کسی است...`;
             
             navigator.clipboard.writeText(shareText).then(() => {
                 const box = document.getElementById('shareBox');
